@@ -15,12 +15,21 @@ const scrollTo = (selector: string) => {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenProject }) => {
   const rootRef = useRef<HTMLElement | null>(null);
+  const today = new Date();
+  const currentWeekday = today.toLocaleDateString('en-GB', { weekday: 'long' });
+  const currentDate = today.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
 
   useEffect(() => {
     const root = rootRef.current;
     if (!root) return;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const cleanups: Array<() => void> = [];
+    let disposed = false;
+    let revertPhotoMotion: (() => void) | undefined;
 
     /* ---- Sliding nav pill ---- */
     const nav = root.querySelector<HTMLElement>('#heroNav');
@@ -101,8 +110,92 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
       cancelled = true;
     });
 
-    /* ---- Load animations ---- */
     const photo = root.querySelector<HTMLElement>('#heroPhoto');
+    const photoStage = root.querySelector<HTMLElement>('.hero-photo-stage');
+    const photoMask = root.querySelector<HTMLElement>('.hero-photo-mask');
+
+    /* ---- Hero photo motion ---- */
+    if (!reduced && photo) {
+      void Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(
+        ([gsapModule, scrollTriggerModule]) => {
+          if (disposed) return;
+
+          const gsap = gsapModule.gsap;
+          gsap.registerPlugin(scrollTriggerModule.ScrollTrigger);
+          const photoMotion = gsap.context(() => {
+            gsap.set(photo, { transformPerspective: 1000, transformOrigin: 'center center' });
+            gsap.fromTo(
+              photo,
+              { autoAlpha: 0, filter: 'blur(12px)', scale: 1.04 },
+              {
+                autoAlpha: 1,
+                filter: 'blur(0px)',
+                scale: 1,
+                duration: 1.3,
+                delay: 0.04,
+                ease: 'power3.out',
+              }
+            );
+
+            if (photoMask) {
+              gsap.to(photoMask, {
+                yPercent: -6,
+                ease: 'none',
+                scrollTrigger: {
+                  trigger: root,
+                  start: 'top top',
+                  end: 'bottom top',
+                  scrub: 0.6,
+                },
+              });
+            }
+
+            if (!photoStage) return;
+
+            const moveX = gsap.quickTo(photo, 'x', { duration: 0.75, ease: 'power3.out' });
+            const moveY = gsap.quickTo(photo, 'y', { duration: 0.75, ease: 'power3.out' });
+            const rotateX = gsap.quickTo(photo, 'rotationX', { duration: 0.75, ease: 'power3.out' });
+            const rotateY = gsap.quickTo(photo, 'rotationY', { duration: 0.75, ease: 'power3.out' });
+
+            const resetPhoto = () => {
+              moveX(0);
+              moveY(0);
+              rotateX(0);
+              rotateY(0);
+            };
+
+            const movePhotoWithPointer = (event: PointerEvent) => {
+              if (event.pointerType !== 'mouse') return;
+
+              const bounds = photoStage.getBoundingClientRect();
+              const x = event.clientX - bounds.left;
+              const y = event.clientY - bounds.top;
+              if (x < 0 || x > bounds.width || y < 0 || y > bounds.height) {
+                resetPhoto();
+                return;
+              }
+
+              const horizontal = x / bounds.width - 0.5;
+              const vertical = y / bounds.height - 0.5;
+              moveX(horizontal * 14);
+              moveY(vertical * 12);
+              rotateX(vertical * -1.4);
+              rotateY(horizontal * 1.6);
+            };
+
+            root.addEventListener('pointermove', movePhotoWithPointer);
+            root.addEventListener('pointerleave', resetPhoto);
+            cleanups.push(() => {
+              root.removeEventListener('pointermove', movePhotoWithPointer);
+              root.removeEventListener('pointerleave', resetPhoto);
+            });
+          }, root);
+          revertPhotoMotion = () => photoMotion.revert();
+        }
+      );
+    }
+
+    /* ---- Load animations ---- */
     if (!reduced) {
       root.querySelectorAll<HTMLElement>('.title-line').forEach((line, i) => {
         line.animate(
@@ -110,13 +203,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
           { duration: 1000, delay: 80 + i * 110, easing: EASE_OUT, fill: 'backwards' }
         );
       });
-      photo?.animate(
-        [
-          { opacity: 0, filter: 'blur(12px)', transform: 'translate3d(0, 40px, 0)' },
-          { opacity: 1, filter: 'blur(0px)', transform: 'translate3d(0, 0, 0)' },
-        ],
-        { duration: 1300, delay: 40, easing: EASE_OUT, fill: 'backwards' }
-      );
       nav?.animate(
         [
           { opacity: 0, transform: 'translate3d(0, -18px, 0)' },
@@ -143,29 +229,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
     }
     root.querySelectorAll<HTMLElement>('[data-counter]').forEach((el) => animateCounter(el, 1400, 260));
 
-    /* ---- Photo parallax on scroll ---- */
-    if (!reduced && photo) {
-      let ticking = false;
-      const update = () => {
-        ticking = false;
-        photo.style.transform =
-          window.innerWidth > 760 ? `translate3d(0, ${(window.scrollY * 0.12).toFixed(2)}px, 0)` : '';
-      };
-      const onScroll = () => {
-        if (!ticking) {
-          ticking = true;
-          requestAnimationFrame(update);
-        }
-      };
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', onScroll, { passive: true });
-      cleanups.push(() => {
-        window.removeEventListener('scroll', onScroll);
-        window.removeEventListener('resize', onScroll);
-      });
-    }
-
-    return () => cleanups.forEach((fn) => fn());
+    return () => {
+      disposed = true;
+      cleanups.forEach((fn) => fn());
+      revertPhotoMotion?.();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -183,8 +251,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
           </nav>
 
           <div className="hero-date" data-hero-stagger>
-            Sunday
-            <span className="hero-date-sub">17.06 – 27 June 2026</span>
+            {currentWeekday}
+            <span className="hero-date-sub">{currentDate}</span>
           </div>
 
           <button
@@ -391,17 +459,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
           <div className="out-now-kicker">Out Now</div>
           <div className="out-now-head">
             <span className="out-now-title">{PROJECTS[0].name}</span>
-            <span className="out-now-year">[{PROJECTS[0].year}]</span>
           </div>
-          <button
-            type="button"
+          <a
+            href={PROJECTS[0].link}
+            target="_blank"
+            rel="noopener noreferrer"
             className="q-card"
-            onClick={() => onOpenProject(PROJECTS[0], 2)}
             aria-label={`Open ${PROJECTS[0].name} project`}
           >
             <img
               className="q-card-img"
-              src={PROJECTS[0].col2Image} alt={PROJECTS[0].name}
+              src={PROJECTS[0].images[0]} alt={PROJECTS[0].name}
               referrerPolicy="no-referrer"
             />
             <div className="q-card-scrim" aria-hidden="true"></div>
@@ -419,7 +487,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
             <div className="q-progress-track" aria-hidden="true">
               <div className="q-progress-fill" id="qProgressFill"></div>
             </div>
-          </button>
+          </a>
         </div>
       </div>
     </section>

@@ -48,71 +48,54 @@ const StickyProjectCard: React.FC<StickyProjectCardProps> = ({
               {project.number}
             </span>
             <div className="flex flex-col">
-              <span className="text-xs font-light uppercase tracking-widest text-black/60 sm:text-sm md:text-base">
-                {project.category}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-light uppercase tracking-widest text-black/60 sm:text-sm md:text-base">
+                  {project.category}
+                </span>
+                {project.badge && (
+                  <span className="rounded-full bg-emerald-700 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
+                    {project.badge}
+                  </span>
+                )}
+              </div>
               <h3 className="text-[clamp(1.1rem,2.5vw,2.25rem)] font-medium uppercase leading-tight tracking-wide text-black">
                 {project.name}
               </h3>
             </div>
           </div>
 
-          <LiveProjectButton onClick={() => onOpenProject(project, 0)} />
-        </div>
-
-        {/* Bottom Row: 40% Left Stacked Column + 60% Right Tall Column */}
-        <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-10 md:gap-5">
-          {/* Left Column (40% on md+) */}
-          <div className="flex flex-row gap-3 sm:gap-4 md:col-span-4 md:flex-col md:gap-5">
-            <button
-              type="button"
+          <div className="flex flex-wrap items-center gap-3">
+            <LiveProjectButton
+              href={project.link}
               onClick={() => onOpenProject(project, 0)}
-              aria-label={`View ${project.name} showcase render 1`}
-              className="group relative h-[130px] w-1/2 overflow-hidden rounded-[20px] bg-[#BFBFBF] cursor-pointer sm:h-[155px] sm:rounded-[24px] md:h-[clamp(130px,16vw,230px)] md:w-full md:rounded-[28px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
-            >
-              <SmartImage
-                src={project.col1Images[0]}
-                alt={`${project.name} visual study 1`}
-                loading="lazy"
-                fallbackLabel={project.name}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-            </button>
-
-            <button
-              type="button"
-              onClick={() => onOpenProject(project, 1)}
-              aria-label={`View ${project.name} showcase render 2`}
-              className="group relative h-[130px] w-1/2 overflow-hidden rounded-[20px] bg-[#BFBFBF] cursor-pointer sm:h-[155px] sm:rounded-[24px] md:h-[clamp(160px,22vw,340px)] md:w-full md:rounded-[28px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
-            >
-              <SmartImage
-                src={project.col1Images[1]}
-                alt={`${project.name} visual study 2`}
-                loading="lazy"
-                fallbackLabel={project.name}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-            </button>
-          </div>
-
-          {/* Right Column (60% on md+) */}
-          <div className="relative h-[210px] sm:h-[260px] md:col-span-6 md:h-auto">
-            <button
-              type="button"
-              onClick={() => onOpenProject(project, 2)}
-              aria-label={`View ${project.name} primary showcase render`}
-              className="group absolute inset-0 h-full w-full overflow-hidden rounded-[20px] bg-[#BFBFBF] cursor-pointer sm:rounded-[24px] md:rounded-[28px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
-            >
-              <SmartImage
-                src={project.col2Image}
-                alt={`${project.name} featured artwork`}
-                loading="lazy"
-                fallbackLabel={project.name}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-              />
-            </button>
+            />
+            {project.adminLink && (
+              <a
+                href={project.adminLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center rounded-full border border-black/30 px-5 py-2.5 text-xs font-medium uppercase tracking-widest text-black transition-colors hover:bg-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-[#F2F2F2]"
+              >
+                Admin
+              </a>
+            )}
           </div>
         </div>
+
+        <button
+          type="button"
+          onClick={() => onOpenProject(project, 0)}
+          aria-label={`View ${project.name} project`}
+          className="group relative block h-[clamp(220px,42vw,520px)] w-full overflow-hidden rounded-[20px] bg-[#BFBFBF] cursor-pointer sm:rounded-[24px] md:rounded-[28px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+        >
+          <SmartImage
+            src={project.images[0]}
+            alt={`${project.name} project screenshot`}
+            loading="lazy"
+            fallbackLabel={project.name}
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        </button>
       </motion.article>
     </div>
   );

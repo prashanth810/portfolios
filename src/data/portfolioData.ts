@@ -1,3 +1,19 @@
+import spacePortfolioImage from '../asset/spaceportfolio.png';
+import spaceXAboutImage from '../asset/spacexabout.png';
+import spaceXProjectsImage from '../asset/spacexprojects.png';
+import grandmaFoodsImage from '../asset/pickles.png';
+import plaplaCabsImage from '../asset/cabpooling.png';
+import liveformingImage from '../asset/liveforming.png';
+import freshiesDashboardImage from '../asset/admindashboard.png';
+import freshiesAnalyticsImage from '../asset/adminanalytics.png';
+import freshiesVendorsImage from '../asset/dminvendors.png';
+import rakzsHomeImage from '../asset/photography.png';
+import rakzsAboutImage from '../asset/photoaboutme.png';
+import rakzsPackagesImage from '../asset/photopackages.png';
+import royalGalleryImage from '../asset/royalgallery.png';
+import royalHomeImage from '../asset/royal.png';
+import royalAboutImage from '../asset/royalabout.png';
+
 export interface ServiceItem {
   number: string;
   name: string;
@@ -9,12 +25,13 @@ export interface ProjectItem {
   number: string;
   category: string;
   name: string;
-  year: string;
-  role: string;
   summary: string;
-  deliverables: string[];
-  col1Images: [string, string];
-  col2Image: string;
+  images: string[];
+  tools?: string;
+  link?: string;
+  adminLink?: string;
+  isGithub?: boolean;
+  badge?: string;
 }
 
 export const HERO_PORTRAIT_URL =
@@ -101,54 +118,72 @@ export const SERVICES: ServiceItem[] = [
 
 export const PROJECTS: ProjectItem[] = [
   {
-    id: 'nextlevel-studio',
+    id: 'freshies-online-grocery-store',
     number: '01',
-    category: 'Client',
-    name: 'Nextlevel Studio',
-    year: '2026',
-    role: '3D Direction · Visual Identity · Web Experience',
+    category: 'webdesign',
+    name: 'Freshies - Online Grocery Store',
     summary:
-      'A high-contrast 3D visual language and interactive web launch crafted for Nextlevel Studio, combining bespoke sculpted assets with crisp architectural lighting and fluid motion choreography.',
-    deliverables: ['3D Asset Suite', 'Lookdev & Lighting', 'Interactive Web UI', 'Motion Reel'],
-    col1Images: [
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85',
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85',
+      'A fresh grocery storefront paired with an admin portal for managing vendors and reviewing store analytics.',
+    images: [
+      liveformingImage,
+      freshiesDashboardImage,
+      freshiesAnalyticsImage,
+      freshiesVendorsImage,
     ],
-    col2Image:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85',
+    tools: 'React JS, JavaScript, Tailwind CSS, Responsive UI',
+    link: 'https://livefarmering.vercel.app/',
+    adminLink: 'https://livefarmering.vercel.app/admin-login',
+    isGithub: false,
+    badge: 'New',
   },
   {
-    id: 'aura-brand-identity',
+    id: 'grandmas-foods',
     number: '02',
-    category: 'Personal',
-    name: 'Aura Brand Identity',
-    year: '2026',
-    role: 'Art Direction · Material Studies · Brand System',
+    category: 'E-commerce',
+    name: "Grandma's Foods",
     summary:
-      'An exploration of iridescent glass shaders, sculptural typography, and atmospheric dark-stage lighting built as a complete brand identity study for next-generation creative collectives.',
-    deliverables: ['Brand Guidelines', 'Custom Shaders', 'Editorial Stills', 'Packaging Mockups'],
-    col1Images: [
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85',
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85',
-    ],
-    col2Image:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85',
+      'An online storefront for pickles, spices, sweets, and other homemade foods.',
+    images: [grandmaFoodsImage],
+    link: 'https://pickles-murex.vercel.app/',
   },
   {
-    id: 'solaris-digital',
+    id: 'space-x-portfolio',
     number: '03',
-    category: 'Client',
-    name: 'Solaris Digital',
-    year: '2025',
-    role: '3D Product Visualization · Motion Design · Web Design',
+    category: 'Developer Portfolio',
+    name: 'SpaceX Portfolio',
     summary:
-      'End-to-end 3D visualization and digital flagship design for Solaris Digital, featuring precision-lit hero renders, modular component systems, and seamless scroll-driven storytelling.',
-    deliverables: ['3D Product Renders', 'Motion Loops', 'Design System', 'Responsive Website'],
-    col1Images: [
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85',
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85',
-    ],
-    col2Image:
-      'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85',
+      'A space-inspired developer portfolio featuring an introduction and selected project work.',
+    images: [spacePortfolioImage, spaceXAboutImage, spaceXProjectsImage],
+    link: 'https://prahsnathspacex.vercel.app/',
+  },
+  {
+    id: 'rakzs-studio-photography',
+    number: '04',
+    category: 'Photography',
+    name: 'RAKZS Studio',
+    summary:
+      'A photography and cinematic film studio for weddings, couples, family celebrations, business events, and brands.',
+    images: [rakzsHomeImage, rakzsAboutImage, rakzsPackagesImage],
+    link: 'https://rakzs-studio.vercel.app/',
+    badge: 'New',
+  },
+  {
+    id: 'royal-palace-gallery',
+    number: '05',
+    category: 'Restaurant & Gallery',
+    name: 'Royal Palace Gallery',
+    summary:
+      'A restaurant website showcasing Royal Palace dining, signature dishes, interiors, and banquet spaces in Hyderabad.',
+    images: [royalGalleryImage, royalHomeImage, royalAboutImage],
+    link: 'https://royal-lime.vercel.app/',
+  },
+  {
+    id: 'plapla-cabs',
+    number: '06',
+    category: 'Ride Booking',
+    name: 'Plapla Cabs',
+    summary:
+      'A cab-booking experience for finding affordable rides and planning trips.',
+    images: [plaplaCabsImage],
   },
 ];
