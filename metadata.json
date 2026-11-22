@@ -1,0 +1,6 @@
+{
+  "name": "Prashanth -- 3D Creator",
+  "description": "Portfolio landing page for Prashanth, a 3D creator specializing in 3D modeling, photorealistic rendering, motion design, branding, and web design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
