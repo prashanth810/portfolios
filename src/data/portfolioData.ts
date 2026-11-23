@@ -81,7 +81,7 @@ export const ABOUT_DECORATIVE_IMAGES = {
 } as const;
 
 export const ABOUT_PARAGRAPH =
-  "With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!";
+  'I am a Frontend Developer with 2 years of experience specializing in React.js, JavaScript, and React Native. I build modern, responsive web and mobile applications, including e-commerce projects, using HTML, CSS, Tailwind CSS, Bootstrap, Redux, and API integration.';
 
 export const SERVICES: ServiceItem[] = [
   {

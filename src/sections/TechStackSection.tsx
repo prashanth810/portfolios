@@ -3,25 +3,40 @@ import { FadeIn } from '../components/FadeIn';
 import { Marquee } from './Marquee';
 
 const ROW_ONE = [
-  'Blender',
-  'Cinema 4D',
-  'Maya',
-  'ZBrush',
-  'Substance Painter',
-  'Houdini',
-  'Unreal Engine',
-  'Octane',
+  'HTML',
+  'CSS',
+  'Bootstrap',
+  'JavaScript',
+  'React JS',
+  'Redux',
+  'Tailwind CSS',
 ];
 
 const ROW_TWO = [
-  'React',
-  'TypeScript',
-  'Tailwind CSS',
-  'Framer Motion',
-  'Three.js',
-  'Vite',
-  'Figma',
-  'After Effects',
+  'React Native',
+  'Node.js',
+  'Express.js',
+  'MongoDB',
+  'REST API',
+  'GSAP',
+  'Reanimated',
+  'SOC Analyst',
+  'Splunk',
+];
+
+const ROW_THREE = [
+  'Brute Force',
+  'Password Spraying',
+  'Suspicious Login',
+  'Phishing',
+  'Malware',
+  'Ransomware',
+  'DoS / DDoS',
+  'DNS Attacks',
+  'SQL Injection',
+  'XSS',
+  'BEC',
+  'Account Compromise',
 ];
 
 const Chip: React.FC<{ label: string }> = ({ label }) => (
@@ -56,6 +71,13 @@ export const TechStackSection: React.FC = () => (
       {/* Right to left */}
       <Marquee direction="left" duration={35} gapClassName="gap-4 pr-4" pauseOnHover>
         {ROW_TWO.map((t) => (
+          <Chip key={t} label={t} />
+        ))}
+      </Marquee>
+
+      {/* Security and threat areas */}
+      <Marquee direction="right" duration={40} gapClassName="gap-4 pr-4" pauseOnHover>
+        {ROW_THREE.map((t) => (
           <Chip key={t} label={t} />
         ))}
       </Marquee>

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { PROJECTS, ProjectItem } from '../data/portfolioData';
+import freshiesDashboardImage from '../asset/admindashboard.png';
 
 export interface HeroSectionProps {
   onOpenContact: (preselectedService?: string) => void;
@@ -245,7 +246,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
           <nav className="nav-pill" id="heroNav" aria-label="Primary navigation">
             <div className="nav-indicator" id="navIndicator" aria-hidden="true"></div>
             <a href="#top" className="nav-link is-active is-covered" data-nav="home">Home</a>
-            <a href="#statement" className="nav-link" data-nav="studio">Studio</a>
+            <a href="#statement" className="nav-link" data-nav="about">About Me</a>
             <a href="#projects" className="nav-link" data-nav="works">Works</a>
             <a href="#contact" className="nav-link" data-nav="contact">Contact</a>
           </nav>
@@ -358,7 +359,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
           
           <div className="stat-dark-card">
             <div>
-              <div className="stat-num" data-counter="400" data-suffix="+">400+</div>
+              <div className="stat-num" data-counter="2" data-suffix="+"> 2+ </div>
               <div className="stat-sub">Trusted Partner</div>
             </div>
 
@@ -368,40 +369,40 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
                   <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.3" />
                   <path d="M3.5 6H8.5" stroke="currentColor" strokeWidth="1.3" />
                 </svg>
-                Halcyon
+                React Js
               </span>
               <span className="partner-mark">
                 <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <rect x="2" y="2" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
                   <circle cx="6" cy="6" r="1.4" fill="currentColor" />
                 </svg>
-                Ostra
+                React Native
               </span>
               <span className="partner-mark">
                 <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <path d="M2.5 9.5V2.5H9.5" stroke="currentColor" strokeWidth="1.4" />
                   <path d="M2.5 6H7.5" stroke="currentColor" strokeWidth="1.4" />
                 </svg>
-                Fenwick
+                Node Js
               </span>
               <span className="partner-mark">
                 <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <circle cx="4.2" cy="6" r="2.3" stroke="currentColor" strokeWidth="1.2" />
                   <circle cx="7.8" cy="6" r="2.3" stroke="currentColor" strokeWidth="1.2" />
                 </svg>
-                Monolo
+                Express Js
               </span>
               <span className="partner-mark">
                 <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <polygon points="6,1.5 10.5,6 6,10.5 1.5,6" stroke="currentColor" strokeWidth="1.2" />
                 </svg>
-                Kitefly
+                Javascript
               </span>
               <span className="partner-mark">
                 <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
                   <path d="M6 1.8L10 9.8H2L6 1.8Z" stroke="currentColor" strokeWidth="1.2" />
                 </svg>
-                Arbor
+                
               </span>
             </div>
 
@@ -415,8 +416,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
           <div className="stat-photo-card">
             <img
               className="stat-photo-bg"
-              src="https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/a9d3641f-d629-46e5-8d2d-5f75386b803d.webp"
-              alt="Studio feed portrait of a young man in a black cap"
+              src={freshiesDashboardImage}
+              alt="Freshies admin dashboard preview"
               referrerPolicy="no-referrer"
             />
             <div className="stat-photo-scrim" aria-hidden="true"></div>

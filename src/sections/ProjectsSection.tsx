@@ -29,20 +29,27 @@ const StickyProjectCard: React.FC<StickyProjectCardProps> = ({
   const targetScale = 1 - (totalCards - 1 - index) * 0.03;
   const start = index * (1 / totalCards);
   const scale = useTransform(progress, [start, 1], [1, targetScale]);
+  const rightImage = project.images[0];
+  const leftTopImage = project.images[1] ?? rightImage;
+  const leftBottomImage = project.images[2] ?? rightImage;
+  const leftTopIndex = project.images[1] ? 1 : 0;
+  const leftBottomIndex = project.images[2] ? 2 : 0;
+  const hasMultipleImages = project.images.length > 1;
+  const leftImageFit = hasMultipleImages ? 'object-contain' : 'object-cover';
 
   return (
-    <div className="sticky top-16 flex h-[85vh] min-h-[600px] w-full items-start justify-center sm:top-24 sm:min-h-[660px] md:top-32">
+    <div className="sticky top-16 flex h-[calc(100svh-5rem)] w-full items-start justify-center sm:top-24 sm:h-[calc(100svh-7.5rem)] md:top-32 md:h-[calc(100svh-10rem)]">
       <motion.article
         style={{
           scale,
-          top: `${index * 28}px`,
           transformOrigin: 'top center',
           willChange: 'transform',
+          zIndex: index + 1,
         }}
-        className="relative w-full rounded border border-black/15 bg-[#F2F2F2] p-4 shadow-[0_12px_36px_rgba(0,0,0,0.12)]"
+        className="relative flex h-full w-full flex-col border border-black/15 bg-[#F2F2F2] p-4 shadow-[0_12px_36px_rgba(0,0,0,0.12)] sm:rounded-[14px] sm:p-5"
       >
         {/* Top Row: Number, Category + Name, and Live Project CTA */}
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-4 sm:mb-6 md:mb-8">
+        <div className="mb-3 flex shrink-0 flex-wrap items-center justify-between gap-3 sm:mb-4 md:mb-5">
           <div className="flex items-center gap-4 sm:gap-6 md:gap-8">
             <span className="text-[clamp(2.5rem,7.5vw,105px)] font-black leading-none tracking-tight text-black tabular-nums">
               {project.number}
@@ -82,20 +89,53 @@ const StickyProjectCard: React.FC<StickyProjectCardProps> = ({
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={() => onOpenProject(project, 0)}
-          aria-label={`View ${project.name} project`}
-          className="group relative block h-[clamp(220px,42vw,520px)] w-full overflow-hidden rounded-[20px] bg-[#BFBFBF] cursor-pointer sm:rounded-[24px] md:rounded-[28px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
-        >
-          <SmartImage
-            src={project.images[0]}
-            alt={`${project.name} project screenshot`}
-            loading="lazy"
-            fallbackLabel={project.name}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-          />
-        </button>
+        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,36%)_minmax(0,64%)] gap-3 sm:gap-4 md:gap-5">
+          <div className="grid min-h-0 grid-rows-2 gap-3 sm:gap-4 md:gap-5">
+            <button
+              type="button"
+              onClick={() => onOpenProject(project, leftTopIndex)}
+              aria-label={`View ${project.name} detail preview`}
+              className="group relative min-h-0 overflow-hidden border border-black/10 bg-[#E8E8E8] cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.04)] sm:rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+            >
+              <SmartImage
+                src={leftTopImage}
+                alt={`${project.name} detail preview`}
+                loading="lazy"
+                fallbackLabel={project.name}
+                className={`h-full w-full ${leftImageFit} ${hasMultipleImages ? 'object-center' : 'object-[center_top]'} transition-transform duration-500 group-hover:scale-[1.02]`}
+              />
+            </button>
+            <button
+              type="button"
+              onClick={() => onOpenProject(project, leftBottomIndex)}
+              aria-label={`View ${project.name} secondary preview`}
+              className="group relative min-h-0 overflow-hidden border border-black/10 bg-[#E8E8E8] cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.04)] sm:rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+            >
+              <SmartImage
+                src={leftBottomImage}
+                alt={`${project.name} secondary preview`}
+                loading="lazy"
+                fallbackLabel={project.name}
+                className={`h-full w-full ${leftImageFit} ${hasMultipleImages ? 'object-center' : 'object-[center_bottom]'} transition-transform duration-500 group-hover:scale-[1.02]`}
+              />
+            </button>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => onOpenProject(project, 0)}
+            aria-label={`View ${project.name} project`}
+            className="group relative min-h-0 overflow-hidden border border-black/10 bg-[#E8E8E8] cursor-pointer shadow-[0_2px_12px_rgba(0,0,0,0.05)] sm:rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+          >
+            <SmartImage
+              src={rightImage}
+              alt={`${project.name} project screenshot`}
+              loading="lazy"
+              fallbackLabel={project.name}
+              className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+            />
+          </button>
+        </div>
       </motion.article>
     </div>
   );
@@ -167,7 +207,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
             onClick={() => scrollToSection('#statement')}
             className="uppercase tracking-wider transition-opacity duration-200 hover:opacity-100 opacity-70 cursor-pointer"
           >
-            Studio
+            About Me
           </button>
           <button
             type="button"

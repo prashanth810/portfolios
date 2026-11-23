@@ -1,12 +1,33 @@
 import React, { useEffect, useRef } from 'react';
 
-const LINES = [
-  'We believe the strongest brands are',
-  'built through strategy, not just',
-  'aesthetics. Every campaign is designed',
-  'to capture attention, inspire action, and',
-  'create lasting business growth.',
+const ABOUT_LINES = [
+  'I am a Frontend Developer',
+  'with 2 years of experience',
+  'building modern React and',
+  'React Native applications.',
 ];
+
+const ABOUT_DESCRIPTION =
+  'I build responsive web and mobile experiences with React.js, JavaScript, Tailwind CSS, Redux, and REST API integration. My work includes e-commerce solutions and scalable interfaces designed for real users.';
+
+const ABOUT_EXTRA =
+  'I also have 1 year of experience with React Native and backend technologies including Node.js, Express.js, and MongoDB, creating authentication and payment features.';
+
+const SKILLS = [
+  'React.js',
+  'JavaScript',
+  'React Native',
+  'Tailwind CSS',
+  'Redux',
+  'Node.js',
+  'Express.js',
+  'MongoDB',
+  'HTML',
+  'CSS',
+];
+
+const STATEMENT_PORTRAIT =
+  'https://d2ol7oe51mr4n9.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/7dc8b8f3-4ccb-4599-8ce4-7f7c7881bad9.webp';
 
 const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
 
@@ -90,26 +111,48 @@ export const StatementSection: React.FC = () => {
       </div>
 
       <section className="statement-section" id="statement" aria-label="Manifesto">
-        <div className="statement-inner">
-          <p className="statement-text" ref={textRef}>
-            {LINES.map((line, li) => (
-              <React.Fragment key={li}>
-                {line.split(' ').map((word, wi, arr) => (
-                  <React.Fragment key={wi}>
-                    <span className="stmt-word">{word}</span>
-                    {(wi < arr.length - 1 || li < LINES.length - 1) && ' '}
-                  </React.Fragment>
-                ))}
-                {li < LINES.length - 1 && <br className="stmt-br" />}
-              </React.Fragment>
-            ))}
-          </p>
+        <div className="statement-inner statement-about-layout">
+          <div className="statement-image-wrap">
+            <img
+              className="statement-image"
+              src={STATEMENT_PORTRAIT}
+              alt="Prashanth, frontend developer"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
+            <span className="statement-image-label">ABOUT ME</span>
+          </div>
 
-          <p className="statement-sub">
-            Performance-driven marketing, from
-            <br />
-            strategy to execution. <em>Built for growing brands.</em>
-          </p>
+          <div className="statement-copy">
+            <p className="statement-kicker">
+              Frontend Developer · 2 Years
+              <span>Backend Development · Node.js</span>
+            </p>
+            <h2 className="statement-text" ref={textRef}>
+              {ABOUT_LINES.map((line, li) => (
+                <React.Fragment key={li}>
+                  {line.split(' ').map((word, wi, arr) => (
+                    <React.Fragment key={wi}>
+                      <span className="stmt-word">{word}</span>
+                      {wi < arr.length - 1 && ' '}
+                    </React.Fragment>
+                  ))}
+                  {li < ABOUT_LINES.length - 1 && <br className="stmt-br" />}
+                </React.Fragment>
+              ))}
+            </h2>
+
+            <div className="statement-description">
+              <p>{ABOUT_DESCRIPTION}</p>
+              <p>{ABOUT_EXTRA}</p>
+            </div>
+
+            <div className="statement-skills" aria-label="Core skills">
+              {SKILLS.map((skill) => (
+                <span key={skill}>{skill}</span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
     </>

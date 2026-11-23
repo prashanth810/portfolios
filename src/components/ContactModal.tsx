@@ -10,7 +10,7 @@ export interface ContactModalProps {
   onClose: () => void;
 }
 
-const BUDGET_RANGES = ['$2k – $5k', '$5k – $10k', '$10k – $25k', '$25k+'] as const;
+const BUDGET_RANGES = ['₹2k – ₹5k', '₹5k – ₹10k', '₹10k – ₹25k', '₹25k+'] as const;
 
 export const ContactModal: React.FC<ContactModalProps> = ({
   isOpen,
