@@ -13,7 +13,7 @@ export const LiveProjectButton: React.FC<LiveProjectButtonProps> = ({
   className = '',
   href,
 }) => {
-  const classes = `inline-flex items-center justify-center rounded-full border-2 border-black px-6 py-2.5 sm:px-10 sm:py-3.5 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-black transition-colors duration-200 hover:bg-black/5 cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-[#DADADA] ${className}`;
+  const classes = `inline-flex min-h-11 items-center justify-center rounded-full border-2 border-black px-6 py-2.5 sm:px-10 sm:py-3.5 text-xs sm:text-sm md:text-base font-medium uppercase tracking-widest text-black transition-colors duration-200 hover:bg-black/5 cursor-pointer whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-[#DADADA] ${className}`;
 
   if (href) {
     return (

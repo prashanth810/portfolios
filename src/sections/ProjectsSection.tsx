@@ -8,7 +8,6 @@ import { TechStackSection } from './TechStackSection';
 
 export interface ProjectsSectionProps {
   onOpenProject: (project: ProjectItem, initialImageIndex?: number) => void;
-  onOpenContact: (preselectedService?: string) => void;
 }
 
 interface StickyProjectCardProps {
@@ -89,8 +88,8 @@ const StickyProjectCard: React.FC<StickyProjectCardProps> = ({
           </div>
         </div>
 
-        <div className="grid min-h-0 flex-1 grid-cols-[minmax(0,36%)_minmax(0,64%)] gap-3 sm:gap-4 md:gap-5">
-          <div className="grid min-h-0 grid-rows-2 gap-3 sm:gap-4 md:gap-5">
+        <div className="project-preview-grid grid min-h-0 flex-1 grid-cols-[minmax(0,36%)_minmax(0,64%)] gap-3 sm:gap-4 md:gap-5">
+          <div className="project-preview-thumbnails grid min-h-0 grid-rows-2 gap-3 sm:gap-4 md:gap-5">
             <button
               type="button"
               onClick={() => onOpenProject(project, leftTopIndex)}
@@ -125,7 +124,7 @@ const StickyProjectCard: React.FC<StickyProjectCardProps> = ({
             type="button"
             onClick={() => onOpenProject(project, 0)}
             aria-label={`View ${project.name} project`}
-            className="group relative min-h-0 overflow-hidden border border-black/10 bg-[#E8E8E8] cursor-pointer shadow-[0_2px_12px_rgba(0,0,0,0.05)] sm:rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
+            className="project-preview-featured group relative min-h-0 overflow-hidden border border-black/10 bg-[#E8E8E8] cursor-pointer shadow-[0_2px_12px_rgba(0,0,0,0.05)] sm:rounded-[12px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black"
           >
             <SmartImage
               src={rightImage}
@@ -143,20 +142,12 @@ const StickyProjectCard: React.FC<StickyProjectCardProps> = ({
 
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   onOpenProject,
-  onOpenContact,
 }) => {
   const stackRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: stackRef,
     offset: ['start start', 'end end'],
   });
-
-  const scrollToSection = (selector: string) => {
-    const el = document.querySelector(selector);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   return (
     <section
@@ -188,42 +179,6 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({
         <TechStackSection />
       </div>
 
-      {/* Minimal Footer */}
-      <footer className="mx-auto mt-20 flex w-full max-w-[1280px] flex-col items-center justify-between gap-6 border-t border-black/15 pt-10 text-sm text-black/70 sm:mt-28 sm:flex-row">
-        <p className="font-light uppercase tracking-wider">
-          &copy; {new Date().getFullYear()} Prashanth &mdash; 3D Creator
-        </p>
-
-        <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8">
-          <button
-            type="button"
-            onClick={() => scrollToSection('#top')}
-            className="uppercase tracking-wider transition-opacity duration-200 hover:opacity-100 opacity-70 cursor-pointer"
-          >
-            Top
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('#statement')}
-            className="uppercase tracking-wider transition-opacity duration-200 hover:opacity-100 opacity-70 cursor-pointer"
-          >
-            About Me
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollToSection('#tech')}
-            className="uppercase tracking-wider transition-opacity duration-200 hover:opacity-100 opacity-70 cursor-pointer"
-          >
-            Tech Stack
-          </button>
-          <button
-            type="button"
-            onClick={() => onOpenContact()}
-            className="uppercase tracking-wider text-black underline underline-offset-4 transition-opacity duration-200 hover:opacity-70 cursor-pointer" >
-            Start a Project
-          </button>
-        </div>
-      </footer>
     </section>
   );
 };

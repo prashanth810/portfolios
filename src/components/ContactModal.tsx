@@ -108,7 +108,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                 type="button"
                 onClick={onClose}
                 aria-label="Close contact dialog"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/20 text-black transition-colors duration-200 hover:bg-black/5 cursor-pointer"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/20 text-black transition-colors duration-200 hover:bg-black/5 cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -150,7 +150,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   <button
                     type="button"
                     onClick={handleCopyEmail}
-                    className="inline-flex items-center gap-1.5 text-xs uppercase tracking-wider text-black transition-opacity hover:opacity-75 cursor-pointer whitespace-nowrap shrink-0"
+                    className="inline-flex min-h-11 items-center gap-1.5 text-xs uppercase tracking-wider text-black transition-opacity hover:opacity-75 cursor-pointer whitespace-nowrap shrink-0"
                   >
                     {copiedEmail ? (
                       <>
@@ -177,7 +177,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                           key={service.number}
                           type="button"
                           onClick={() => toggleService(service.name)}
-                          className={`rounded-xl border px-3.5 py-2 text-xs font-medium uppercase tracking-wider transition-colors duration-200 cursor-pointer ${
+                          className={`min-h-11 rounded-xl border px-3.5 py-2 text-xs font-medium uppercase tracking-wider transition-colors duration-200 cursor-pointer ${
                             active
                               ? 'border-black bg-black text-white'
                               : 'border-black/20 bg-transparent text-black/80 hover:border-black/50'
@@ -234,7 +234,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                           key={range}
                           type="button"
                           onClick={() => setBudget(range)}
-                          className={`rounded-xl border px-3 py-2 text-xs font-medium tracking-wide transition-colors duration-200 cursor-pointer tabular-nums ${
+                          className={`min-h-11 rounded-xl border px-3 py-2 text-xs font-medium tracking-wide transition-colors duration-200 cursor-pointer tabular-nums ${
                             active
                               ? 'border-black bg-black text-white'
                               : 'border-black/20 text-black/80 hover:border-black/50'
@@ -265,7 +265,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="rounded-full px-5 py-3 text-xs font-medium uppercase tracking-widest text-black/70 transition-colors hover:text-black cursor-pointer"
+                    className="min-h-11 rounded-full px-5 py-3 text-xs font-medium uppercase tracking-widest text-black/70 transition-colors hover:text-black cursor-pointer"
                   >
                     Cancel
                   </button>

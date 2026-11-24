@@ -47,8 +47,7 @@ export const StatementSection: React.FC = () => {
       words.forEach((w, i) => {
         const t = clamp((head - i) / softEdge, 0, 1);
         const s = t * t * (3 - 2 * t);
-        const c = Math.round(89 * (1 - s));
-        w.style.color = `rgb(${c},${c},${c})`;
+        w.style.color = `color-mix(in srgb, var(--statement-bright) ${Math.round(s * 100)}%, var(--statement-dim))`;
       });
     };
 

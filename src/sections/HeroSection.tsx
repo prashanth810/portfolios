@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from 'react';
+import { Moon, Sun } from 'lucide-react';
 import { PROJECTS, ProjectItem } from '../data/portfolioData';
 import freshiesDashboardImage from '../asset/admindashboard.png';
 
 export interface HeroSectionProps {
   onOpenContact: (preselectedService?: string) => void;
   onOpenProject: (project: ProjectItem, initialImageIndex?: number) => void;
+  theme: 'light' | 'dark';
+  onToggleTheme: () => void;
 }
 
 const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
@@ -14,7 +17,12 @@ const scrollTo = (selector: string) => {
   document.querySelector(selector)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenProject }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({
+  onOpenContact,
+  onOpenProject,
+  theme,
+  onToggleTheme,
+}) => {
   const rootRef = useRef<HTMLElement | null>(null);
   const today = new Date();
   const currentWeekday = today.toLocaleDateString('en-GB', { weekday: 'long' });
@@ -57,10 +65,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
       const click = (e: MouseEvent) => {
         e.preventDefault();
         const href = link.getAttribute('href') || '';
-        if (href === '#contact') {
-          onOpenContact();
-          return;
-        }
         active = link;
         links.forEach((l) => l.classList.toggle('is-active', l === link));
         moveIndicator(link, false);
@@ -212,7 +216,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
         { duration: 760, delay: 60, easing: EASE_OUT, fill: 'backwards' }
       );
       root.querySelectorAll<HTMLElement>('[data-hero-stagger]').forEach((el, idx) => {
-        const mobilePlate = window.innerWidth <= 760 && el.classList.contains('brand-plate');
+        const mobilePlate = window.innerWidth <= 1100 && el.classList.contains('brand-plate');
         const from = mobilePlate ? 'translate3d(-50%, calc(-50% + 14px), 0)' : 'translate3d(0, 14px, 0)';
         const to = mobilePlate ? 'translate3d(-50%, -50%, 0)' : 'translate3d(0, 0, 0)';
         el.animate(
@@ -255,6 +259,21 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
             {currentWeekday}
             <span className="hero-date-sub">{currentDate}</span>
           </div>
+
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={onToggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            aria-pressed={theme === 'dark'}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+          >
+            {theme === 'dark' ? (
+              <Sun aria-hidden="true" />
+            ) : (
+              <Moon aria-hidden="true" />
+            )}
+          </button>
 
           <button
             type="button"
@@ -359,50 +378,57 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
           
           <div className="stat-dark-card">
             <div>
-              <div className="stat-num" data-counter="2" data-suffix="+"> 2+ </div>
+              <div className="stat-num" data-counter="5" data-suffix="+"> 5+ </div>
               <div className="stat-sub">Trusted Partner</div>
             </div>
 
-            <div className="partner-grid" aria-label="Fictional partner marks">
+            <div className="partner-grid" aria-label="Technologies and tools">
               <span className="partner-mark">
-                <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <circle cx="6" cy="6" r="4.5" stroke="currentColor" strokeWidth="1.3" />
-                  <path d="M3.5 6H8.5" stroke="currentColor" strokeWidth="1.3" />
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="currentColor" strokeWidth="1.5" />
+                  <ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="currentColor" strokeWidth="1.5" transform="rotate(60 12 12)" />
+                  <ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="currentColor" strokeWidth="1.5" transform="rotate(120 12 12)" />
+                  <circle cx="12" cy="12" r="1.4" fill="currentColor" />
                 </svg>
                 React Js
               </span>
               <span className="partner-mark">
-                <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <rect x="2" y="2" width="8" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
-                  <circle cx="6" cy="6" r="1.4" fill="currentColor" />
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M6 17.5c-1.6-1.4-2.5-3.3-2.5-5.5a8.5 8.5 0 0 1 17 0c0 2.2-.9 4.1-2.5 5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  <circle cx="6" cy="17.5" r="2" fill="currentColor" />
+                  <circle cx="12" cy="12" r="2" fill="currentColor" />
+                  <circle cx="18" cy="17.5" r="2" fill="currentColor" />
                 </svg>
-                React Native
+              Redux Toolkit
               </span>
               <span className="partner-mark">
-                <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <path d="M2.5 9.5V2.5H9.5" stroke="currentColor" strokeWidth="1.4" />
-                  <path d="M2.5 6H7.5" stroke="currentColor" strokeWidth="1.4" />
-                </svg>
-                Node Js
-              </span>
-              <span className="partner-mark">
-                <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <circle cx="4.2" cy="6" r="2.3" stroke="currentColor" strokeWidth="1.2" />
-                  <circle cx="7.8" cy="6" r="2.3" stroke="currentColor" strokeWidth="1.2" />
-                </svg>
-                Express Js
-              </span>
-              <span className="partner-mark">
-                <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <polygon points="6,1.5 10.5,6 6,10.5 1.5,6" stroke="currentColor" strokeWidth="1.2" />
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="2" y="2" width="20" height="20" rx="2" fill="currentColor" />
+                  <text x="12" y="16.5" fill="white" fontSize="9" fontWeight="700" textAnchor="middle" fontFamily="Arial, sans-serif">JS</text>
                 </svg>
                 Javascript
               </span>
               <span className="partner-mark">
-                <svg viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                  <path d="M6 1.8L10 9.8H2L6 1.8Z" stroke="currentColor" strokeWidth="1.2" />
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="m12 2.5 8.2 4.7v9.5L12 21.5l-8.2-4.8V7.2L12 2.5Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" />
+                  <text x="12" y="14.6" fill="currentColor" fontSize="6.5" fontWeight="700" textAnchor="middle" fontFamily="Arial, sans-serif">JS</text>
                 </svg>
-                
+              Node Js
+              </span>
+              <span className="partner-mark">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <text x="12" y="16.5" fill="currentColor" fontSize="14" fontWeight="700" fontStyle="italic" textAnchor="middle" fontFamily="Arial, sans-serif">ex</text>
+                </svg>
+                  Express Js
+              </span>
+              <span className="partner-mark">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="currentColor" strokeWidth="1.5" />
+                  <ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="currentColor" strokeWidth="1.5" transform="rotate(60 12 12)" />
+                  <ellipse cx="12" cy="12" rx="10" ry="3.8" stroke="currentColor" strokeWidth="1.5" transform="rotate(120 12 12)" />
+                  <circle cx="12" cy="12" r="1.4" fill="currentColor" />
+                </svg>
+                  React Native
               </span>
             </div>
 
@@ -423,7 +449,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact, onOpenP
             <div className="stat-photo-scrim" aria-hidden="true"></div>
             <div className="stat-feed-top">Studio Feed · 05/06</div>
             <div className="stat-feed-bottom">
-              <div className="stat-num" data-counter="230" data-suffix="+">230+</div>
+              <div className="stat-num" data-counter="5" data-suffix="+"> 5+</div>
               <div className="stat-feed-desc">Projects successfully launched worldwide</div>
             </div>
           </div>

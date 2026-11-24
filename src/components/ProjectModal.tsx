@@ -86,7 +86,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                 type="button"
                 onClick={onClose}
                 aria-label="Close project showcase"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/20 text-black transition-colors duration-200 hover:bg-black/5 cursor-pointer"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-black/20 text-black transition-colors duration-200 hover:bg-black/5 cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -112,7 +112,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                     onClick={() =>
                       setActiveIndex((prev) => (prev + images.length - 1) % images.length)
                     }
-                    className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/85 cursor-pointer sm:left-4 sm:h-11 sm:w-11"
+                    className="absolute left-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/85 cursor-pointer sm:left-4"
                   >
                     <ChevronLeft className="h-5 w-5" />
                   </button>
@@ -121,7 +121,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
                     type="button"
                     aria-label="Next render"
                     onClick={() => setActiveIndex((prev) => (prev + 1) % images.length)}
-                    className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/85 cursor-pointer sm:right-4 sm:h-11 sm:w-11"
+                    className="absolute right-3 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-sm transition-colors hover:bg-black/85 cursor-pointer sm:right-4"
                   >
                     <ChevronRight className="h-5 w-5" />
                   </button>
